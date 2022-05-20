@@ -50,6 +50,7 @@ public class Attacker : MonoBehaviour
         }
     }
 
+    //TODO Probably use KeyCodes Instead of this
     private CommandType ReadInputs()
     {
         if (Input.GetKeyDown(KeyCode.DownArrow)) { return CommandType.Down; }
