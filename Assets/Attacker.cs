@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
-    [SerializeField] int totalCommands = 2;
-    [SerializeField] float qTETime = 3f;
+    enum CommandType { Up, Down, Left, Right, NONE }
 
-    int inputCommands;
+    [SerializeField] float qTETime = 3f;
+    [SerializeField] CommandType[] commands = null;
+
+    int commandToCheck;
     bool isAttacking;
     float qTETimeLimit;
 
@@ -28,11 +30,18 @@ public class Attacker : MonoBehaviour
                 ResetAttack();
             }
 
-            if (Input.GetKeyDown(KeyCode.L))
+            CommandType currentCommand = ReadInputs();
+            if (currentCommand != CommandType.NONE)
             {
-                inputCommands++;
+                if (currentCommand != commands[commandToCheck])
+                {
+                    Debug.Log("QTE FAILED!");
+                    ResetAttack();
+                }
 
-                if (inputCommands >= totalCommands)
+                commandToCheck++;
+
+                if (commandToCheck >= commands.Length)
                 {
                     Debug.Log("Attack Completed!");
                     ResetAttack();
@@ -41,10 +50,19 @@ public class Attacker : MonoBehaviour
         }
     }
 
+    private CommandType ReadInputs()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow)) { return CommandType.Down; }
+        if (Input.GetKeyDown(KeyCode.UpArrow)) { return CommandType.Up; }
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) { return CommandType.Left; }
+        if (Input.GetKeyDown(KeyCode.RightArrow)) { return CommandType.Right; }
+        return CommandType.NONE;
+    }
+
     private void ResetAttack()
     {
         qTETimeLimit = 0;
-        inputCommands = 0;
+        commandToCheck = 0;
         isAttacking = false;
     }
 }
