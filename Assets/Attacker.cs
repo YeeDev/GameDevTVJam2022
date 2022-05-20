@@ -5,23 +5,43 @@ using UnityEngine;
 public class Attacker : MonoBehaviour
 {
     [SerializeField] int totalCommands = 2;
+    [SerializeField] float qTETime = 3f;
+
+    int inputCommands;
+    bool isAttacking;
+    float qTETimeLimit;
 
     public void Attack()
     {
-        StartCoroutine(ReadQTE());
+        Debug.Log("Attack Started!");
+        isAttacking = true;
+        qTETimeLimit = Time.realtimeSinceStartup + qTETime;
     }
 
-    IEnumerator ReadQTE()
+    private void Update()
     {
-        Debug.Log("Attack Starts!");
-
-        for (int i = 0; i < totalCommands; i++)
+        if (isAttacking)
         {
-            yield return new WaitUntil(() => Input.GetKeyUp(KeyCode.L));
-            Debug.Log("Hi!");
-            yield return new WaitForEndOfFrame();
-        }
+            if (Time.realtimeSinceStartup > qTETimeLimit)
+            {
+                Debug.Log("Attack FAILED!");
+                qTETimeLimit = 0;
+                inputCommands = 0;
+                isAttacking = false;
+            }
 
-        Debug.Log("QTE Completed");
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                inputCommands++;
+
+                if (inputCommands >= totalCommands)
+                {
+                    Debug.Log("Attack Completed!");
+                    qTETimeLimit = 0;
+                    isAttacking = false;
+                    inputCommands = 0;
+                }
+            }
+        }
     }
 }
