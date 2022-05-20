@@ -25,9 +25,7 @@ public class Attacker : MonoBehaviour
             if (Time.realtimeSinceStartup > qTETimeLimit)
             {
                 Debug.Log("Attack FAILED!");
-                qTETimeLimit = 0;
-                inputCommands = 0;
-                isAttacking = false;
+                ResetAttack();
             }
 
             if (Input.GetKeyDown(KeyCode.L))
@@ -37,11 +35,16 @@ public class Attacker : MonoBehaviour
                 if (inputCommands >= totalCommands)
                 {
                     Debug.Log("Attack Completed!");
-                    qTETimeLimit = 0;
-                    isAttacking = false;
-                    inputCommands = 0;
+                    ResetAttack();
                 }
             }
         }
+    }
+
+    private void ResetAttack()
+    {
+        qTETimeLimit = 0;
+        inputCommands = 0;
+        isAttacking = false;
     }
 }
