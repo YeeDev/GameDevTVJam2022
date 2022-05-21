@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToExecute: 2
   commands: 0400000004000000
+  damageDealt: 2
+  failedQTEPenalty: 1

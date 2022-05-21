@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
+    //TODO Another way to search for it
+    [SerializeField] Enemy currentEnemy = null;
+
     int commandToCheck;
     bool isAttacking;
     float qTETimeLimit;
     AttackSO attackUsed;
-
 
     public void Attack(AttackSO attack)
     {
@@ -35,6 +37,7 @@ public class Attacker : MonoBehaviour
                 if (currentCommand != attackUsed.Commands[commandToCheck])
                 {
                     Debug.Log($"QTE FAILED! {currentCommand} != {attackUsed.Commands[commandToCheck]}");
+                    currentEnemy.DealDamage(attackUsed.PenaltyDamage);
                     ResetAttack();
                     return;
                 }
@@ -44,6 +47,7 @@ public class Attacker : MonoBehaviour
                 if (commandToCheck >= attackUsed.Commands.Length)
                 {
                     Debug.Log("Attack Completed!");
+                    currentEnemy.DealDamage(attackUsed.DamageDealt);
                     ResetAttack();
                 }
             }
