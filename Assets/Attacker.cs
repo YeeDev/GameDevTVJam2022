@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
-    enum CommandType { Up, Down, Left, Right, NONE }
-
-    [SerializeField] float qTETime = 3f;
-    [SerializeField] CommandType[] commands = null;
-
     int commandToCheck;
     bool isAttacking;
     float qTETimeLimit;
+    AttackSO attackUsed;
 
-    public void Attack()
+
+    public void Attack(AttackSO attack)
     {
         Debug.Log("Attack Started!");
         isAttacking = true;
-        qTETimeLimit = Time.realtimeSinceStartup + qTETime;
+        attackUsed = attack;
+        qTETimeLimit = Time.realtimeSinceStartup + attack.TimeToExecute;
     }
 
     private void Update()
@@ -31,19 +29,19 @@ public class Attacker : MonoBehaviour
                 return;
             }
 
-            CommandType currentCommand = ReadInputs();
-            if (currentCommand != CommandType.NONE)
+            CommandTypes currentCommand = ReadInputs();
+            if (currentCommand != CommandTypes.NONE)
             {
-                if (currentCommand != commands[commandToCheck])
+                if (currentCommand != attackUsed.Commands[commandToCheck])
                 {
-                    Debug.Log($"QTE FAILED! {currentCommand} != {commands[commandToCheck]}");
+                    Debug.Log($"QTE FAILED! {currentCommand} != {attackUsed.Commands[commandToCheck]}");
                     ResetAttack();
                     return;
                 }
 
                 commandToCheck++;
 
-                if (commandToCheck >= commands.Length)
+                if (commandToCheck >= attackUsed.Commands.Length)
                 {
                     Debug.Log("Attack Completed!");
                     ResetAttack();
@@ -53,13 +51,15 @@ public class Attacker : MonoBehaviour
     }
 
     //TODO Probably use KeyCodes Instead of this
-    private CommandType ReadInputs()
+    private CommandTypes ReadInputs()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow)) { return CommandType.Down; }
-        if (Input.GetKeyDown(KeyCode.UpArrow)) { return CommandType.Up; }
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) { return CommandType.Left; }
-        if (Input.GetKeyDown(KeyCode.RightArrow)) { return CommandType.Right; }
-        return CommandType.NONE;
+        if (Input.GetKeyDown(KeyCode.DownArrow)) { return CommandTypes.Down; }
+        if (Input.GetKeyDown(KeyCode.UpArrow)) { return CommandTypes.Up; }
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) { return CommandTypes.Left; }
+        if (Input.GetKeyDown(KeyCode.RightArrow)) { return CommandTypes.Right; }
+        if (Input.GetKeyDown(KeyCode.L)) { return CommandTypes.Punch; }
+        if (Input.GetKeyDown(KeyCode.K)) { return CommandTypes.Kick; }
+        return CommandTypes.NONE;
     }
 
     private void ResetAttack()
