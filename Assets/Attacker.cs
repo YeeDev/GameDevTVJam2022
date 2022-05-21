@@ -28,6 +28,7 @@ public class Attacker : MonoBehaviour
             {
                 Debug.Log("Attack FAILED!");
                 ResetAttack();
+                return;
             }
 
             CommandType currentCommand = ReadInputs();
@@ -35,8 +36,9 @@ public class Attacker : MonoBehaviour
             {
                 if (currentCommand != commands[commandToCheck])
                 {
-                    Debug.Log("QTE FAILED!");
+                    Debug.Log($"QTE FAILED! {currentCommand} != {commands[commandToCheck]}");
                     ResetAttack();
+                    return;
                 }
 
                 commandToCheck++;
