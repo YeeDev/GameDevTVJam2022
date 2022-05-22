@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Attacker : MonoBehaviour
 {
     //TODO Another way to search for it
     [SerializeField] Enemy currentEnemy = null;
     [SerializeField] CommandsSO commands = null;
+    [SerializeField] Transform qTEBar = null;
 
     int commandToCheck;
     bool isAttacking;
@@ -19,6 +21,13 @@ public class Attacker : MonoBehaviour
         isAttacking = true;
         attackUsed = attack;
         qTETimeLimit = Time.realtimeSinceStartup + attack.TimeToExecute;
+
+        //TODO Use an event for this
+        for (int i = 0; i < attackUsed.Commands.Length; i++)
+        {
+            qTEBar.GetChild(i).GetComponent<Image>().sprite = commands.GetSpriteByCommand(attackUsed.Commands[i]);
+            qTEBar.GetChild(i).gameObject.SetActive(true);
+        }
     }
 
     private void Update()

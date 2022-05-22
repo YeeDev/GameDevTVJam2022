@@ -6,6 +6,17 @@ using UnityEngine;
 public class CommandsSO : ScriptableObject
 {
     [SerializeField] List<KeyCode> commandKeyCodes = null;
+    [SerializeField] List<Sprite> commandSprites = null;
+
+    Dictionary<KeyCode, Sprite> commandsToSprites = new Dictionary<KeyCode, Sprite>();
+
+    private void OnEnable()
+    {
+        for (int i = 0; i < commandKeyCodes.Count; i++)
+        {
+            commandsToSprites.Add(commandKeyCodes[i], commandSprites[i]);
+        }
+    }
 
     public KeyCode GetValidKeyCode()
     {
@@ -16,4 +27,8 @@ public class CommandsSO : ScriptableObject
 
         return KeyCode.None;
     }
+
+    public Sprite GetSpriteByCommand(KeyCode keyCode) {
+        Debug.Log(commandsToSprites.Count);
+        return commandsToSprites[keyCode]; }
 }
