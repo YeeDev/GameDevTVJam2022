@@ -28,7 +28,5 @@ public class CommandsSO : ScriptableObject
         return KeyCode.None;
     }
 
-    public Sprite GetSpriteByCommand(KeyCode keyCode) {
-        Debug.Log(commandsToSprites.Count);
-        return commandsToSprites[keyCode]; }
+    public Sprite GetSpriteByCommand(KeyCode keyCode) { return commandsToSprites[keyCode]; }
 }
