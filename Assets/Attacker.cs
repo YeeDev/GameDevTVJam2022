@@ -69,5 +69,10 @@ public class Attacker : MonoBehaviour
         qTETimeLimit = 0;
         commandToCheck = 0;
         isAttacking = false;
+
+        foreach (Transform child in qTEBar)
+        {
+            child.gameObject.SetActive(false);
+        }
     }
 }
