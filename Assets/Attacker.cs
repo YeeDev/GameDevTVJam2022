@@ -6,6 +6,7 @@ public class Attacker : MonoBehaviour
 {
     //TODO Another way to search for it
     [SerializeField] Enemy currentEnemy = null;
+    [SerializeField] CommandsSO commands = null;
 
     int commandToCheck;
     bool isAttacking;
@@ -31,12 +32,12 @@ public class Attacker : MonoBehaviour
                 return;
             }
 
-            CommandTypes currentCommand = ReadInputs();
-            if (currentCommand != CommandTypes.NONE)
+            KeyCode pressedKey = commands.GetValidKeyCode();
+            if (pressedKey != KeyCode.None)
             {
-                if (currentCommand != attackUsed.Commands[commandToCheck])
+                if (pressedKey != attackUsed.Commands[commandToCheck])
                 {
-                    Debug.Log($"QTE FAILED! {currentCommand} != {attackUsed.Commands[commandToCheck]}");
+                    Debug.Log($"QTE FAILED! {pressedKey} != {attackUsed.Commands[commandToCheck]}");
                     currentEnemy.DealDamage(attackUsed.PenaltyDamage);
                     ResetAttack();
                     return;
@@ -52,18 +53,6 @@ public class Attacker : MonoBehaviour
                 }
             }
         }
-    }
-
-    //TODO Probably use KeyCodes Instead of this
-    private CommandTypes ReadInputs()
-    {
-        if (Input.GetKeyDown(KeyCode.DownArrow)) { return CommandTypes.Down; }
-        if (Input.GetKeyDown(KeyCode.UpArrow)) { return CommandTypes.Up; }
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) { return CommandTypes.Left; }
-        if (Input.GetKeyDown(KeyCode.RightArrow)) { return CommandTypes.Right; }
-        if (Input.GetKeyDown(KeyCode.L)) { return CommandTypes.Punch; }
-        if (Input.GetKeyDown(KeyCode.K)) { return CommandTypes.Kick; }
-        return CommandTypes.NONE;
     }
 
     private void ResetAttack()
