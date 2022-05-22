@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: KickCombo
   m_EditorClassIdentifier: 
   timeToExecute: 2
-  commands: 6c0000006b000000
+  commands: 6c000000770000006b000000
   damageDealt: 3
   failedQTEPenalty: 2

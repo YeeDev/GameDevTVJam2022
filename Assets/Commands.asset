@@ -12,4 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3ba109fedf2c409abb1d6e272aa4875, type: 3}
   m_Name: Commands
   m_EditorClassIdentifier: 
-  commandKeyCodes: 6c0000006b000000
+  commandKeyCodes: 6c0000006b00000077000000640000007300000061000000
+  commandSprites:
+  - {fileID: 21300000, guid: 45cfbf16fda52485f8afbb42dd612ed8, type: 3}
+  - {fileID: 21300000, guid: 3c6fddb0e76b8479e95af08b6268de4c, type: 3}
+  - {fileID: 21300000, guid: c72ce986943b1402c958b1e81991369f, type: 3}
+  - {fileID: 21300000, guid: e08e3b597ccc847a58ea2146ff9221eb, type: 3}
+  - {fileID: 21300000, guid: 5f2d60df4c48746918cf593880031abb, type: 3}
+  - {fileID: 21300000, guid: 59a86d6bd355d4a228c3dd02f37856d2, type: 3}

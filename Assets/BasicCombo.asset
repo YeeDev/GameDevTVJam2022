@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BasicCombo
   m_EditorClassIdentifier: 
   timeToExecute: 2
-  commands: 6c0000006c000000
+  commands: 730000006c0000006c000000
   damageDealt: 2
   failedQTEPenalty: 1
